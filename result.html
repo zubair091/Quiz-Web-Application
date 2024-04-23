@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Result</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .result-container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .result-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .result-container .result {
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .result-container p {
+      text-align: center;
+    }
+
+    .result-container .btn {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="result-container">
+    <h2>Quiz Result</h2>
+    <div class="result">
+      <div id="studentDetails"></div>
+    
+      <p>Score: <span id="score"></span></p>
+    </div>
+    <a href="index.html" class="btn btn-primary">Back to Home</a>
+  </div>
+</div>
+
+<script>
+  const studentDetails = JSON.parse(localStorage.getItem('studentDetails'));
+  const score = localStorage.getItem('score');
+
+  document.getElementById('studentDetails').innerHTML = `
+    <p>Roll Number: ${studentDetails.rollNumber}</p>
+    <p>Name: ${studentDetails.name}</p>
+    <p>Batch: ${studentDetails.batch}</p>
+    <p>Section: ${studentDetails.section}</p>
+  `;
+  document.getElementById('score').innerText = score;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Page</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .quiz-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .quiz-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .options label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .options input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .options input[type="radio"],
+    .options label {
+      cursor: pointer;
+    }
+
+    .options input[type="submit"] {
+      margin-top: 20px;
+    }
+
+    .btn-next {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="quiz-container">
+    <h2>Quiz</h2>
+    <form id="quizForm">
+        <div id="question1">
+            <p>Question : No 1</p>
+          <div class="question">What does CSS stand for?</div>
+          <div class="options">
+            <label><input type="radio" name="q1" value="a"> Cascading Style Sheets</label>
+            <label><input type="radio" name="q1" value="b"> Creative Style Sheets</label>
+            <label><input type="radio" name="q1" value="c"> Computer Style Sheets</label>
+            <label><input type="radio" name="q1" value="d"> Colorful Style Sheets</label>
+          </div>
+        </div>
+  
+        <div id="question2" style="display: none;">
+            <p>Question : No 2</p>
+          <div class="question">Which HTML tag is used to define an internal style sheet?</div>
+          <div class="options">
+            <label><input type="radio" name="q2" value="a"> &lt;css&gt;</label>
+            <label><input type="radio" name="q2" value="b"> &lt;style&gt;</label>
+            <label><input type="radio" name="q2" value="c"> &lt;script&gt;</label>
+            <label><input type="radio" name="q2" value="d"> &lt;html&gt;</label>
+          </div>
+        </div>
+  
+        <div id="question3" style="display: none;">
+            <p>Question : No 3</p>
+          <div class="question">Which property is used to change the background color?</div>
+          <div class="options">
+            <label><input type="radio" name="q3" value="a"> bgcolor</label>
+            <label><input type="radio" name="q3" value="b"> background-color</label>
+            <label><input type="radio" name="q3" value="c"> color</label>
+            <label><input type="radio" name="q3" value="d"> bg-color</label>
+          </div>
+        </div>
+  
+        <div id="question4" style="display: none;">
+            <p>Question : No 4</p>
+          <div class="question">Which of the following is the correct CSS syntax to change the font size of a paragraph?</div>
+          <div class="options">
+            <label><input type="radio" name="q4" value="a"> p {font-size: 12px;}</label>
+            <label><input type="radio" name="q4" value="b"> p {text-size: 12px;}</label>
+            <label><input type="radio" name="q4" value="c"> p {font: 12px;}</label>
+            <label><input type="radio" name="q4" value="d"> p {size: 12px;}</label>
+          </div>
+        </div>
+  
+        <div id="question5" style="display: none;">
+            <p>Question : No 5</p>
+          <div class="question">Which HTML attribute is used to define inline styles?</div>
+          <div class="options">
+            <label><input type="radio" name="q5" value="a"> font</label>
+            <label><input type="radio" name="q5" value="b"> style</label>
+            <label><input type="radio" name="q5" value="c"> styles</label>
+            <label><input type="radio" name="q5" value="d"> class</label>
+          </div>
+        </div>
+  
+        <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">Submit</button>
+      </form>
+  
+  </div>
+</div>
+
+<script>
+  let currentQuestion = 1;
+
+  function nextQuestion() {
+    document.getElementById('question' + currentQuestion).style.display = 'none';
+    currentQuestion++;
+    if (currentQuestion <= 5) {
+      document.getElementById('question' + currentQuestion).style.display = 'block';
+    }
+
+    if (currentQuestion === 5) {
+      document.getElementById('nextBtn').style.display = 'none';
+      document.getElementById('submitBtn').style.display = 'block';
+    }
+  }
+
+  document.getElementById('quizForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    let result = '';
+    let score = 0;
+
+    for (let pair of formData.entries()) {
+      result += `<p>${pair[0]}: ${pair[1]}</p>`;
+      if (pair[0] === 'q1' && pair[1] === 'a') {
+        score++;
+      } else if (pair[0] === 'q2' && pair[1] === 'b') {
+        score++;
+      } else if (pair[0] === 'q3' && pair[1] === 'b') {
+        score++;
+      } else if (pair[0] === 'q4' && pair[1] === 'b') {
+        score++;
+      } else if (pair[0] === 'q5' && pair[1] === 'b') {
+        score++;
+      }
+    }
+
+    const studentDetails = {
+      rollNumber: localStorage.getItem('rollNumber'),
+      name: localStorage.getItem('name'),
+      batch: localStorage.getItem('batch'),
+      section: localStorage.getItem('section')
+    };
+
+    localStorage.setItem('studentDetails', JSON.stringify(studentDetails));
+    localStorage.setItem('quizResult', result);
+    localStorage.setItem('score', score);
+    window.location.href = 'result.html';
+  });
+</script>
+
+</body>
+</html>
